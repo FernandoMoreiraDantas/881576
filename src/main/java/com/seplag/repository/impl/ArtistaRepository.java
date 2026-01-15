@@ -194,4 +194,10 @@ public class ArtistaRepository implements com.seplag.repository.ArtistaRepositor
 		return null;
 	}
 
+	@Override
+	public Page<Artista> findByNomeContainingIgnoreCase(String nome, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

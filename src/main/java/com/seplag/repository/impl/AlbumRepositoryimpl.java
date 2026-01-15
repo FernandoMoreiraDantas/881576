@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
+import com.seplag.dto.AlbumTipoDTO;
 import com.seplag.model.Album;
 import com.seplag.repository.AlbumRepository;
 
@@ -191,6 +192,12 @@ public class AlbumRepositoryimpl implements AlbumRepository {
 
 	@Override
 	public <S extends Album, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<AlbumTipoDTO> buscarAlbunsPorTipoArtista(String tipo, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return null;
 	}

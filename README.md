@@ -1,44 +1,116 @@
+Music API — Spring Boot + Docker
 
-Music API - Spring Boot
-API REST para gerenciamento de Artistas, Álbuns e Regionais, desenvolvida com Java 17, Spring Boot e persistência de dados. Inclui segurança JWT com expiração de 5 minutos e documentação interativa via Swagger.
+API REST para gerenciamento de Artistas, Álbuns e Regionais, desenvolvida com Java 17 + Spring Boot, utilizando autenticação JWT, migração de banco com Flyway, armazenamento de arquivos no MinIO e ambiente totalmente containerizado com Docker.
 
 Tecnologias Utilizadas
-Java 17 & Spring Boot 3
+
+Java 17
+
+Spring Boot 4
+
 Spring Security + JWT (Autenticação e Autorização)
-Spring Data JPA (Persistência)
-H2 Database (Banco de dados em memória para testes)
-Flyway (Migração de banco de dados)
-SpringDoc OpenAPI (Swagger) (Documentação)
 
-Como Executar o Projeto
-Clone o repositório:
-Bash
+Spring Data JPA
+
+PostgreSQL
+
+Flyway (migração de banco)
+
+MinIO (storage S3-like para imagens de álbuns)
+
+SpringDoc OpenAPI (Swagger)
+
+Docker & Docker Compose
+
+Arquitetura do Ambiente (Docker)
+
+Ao subir o projeto com Docker, são criados automaticamente:
+
+Serviço	   Porta	    Função
+music-api	8080	API Spring Boot
+postgres	5432	Banco de dados PostgreSQL
+minio	9000	Storage de imagens (S3-like)
+minio-ui	9001	Console administrativo do MinIO
+Como Executar com Docker
+Pré-requisitos
+Docker Desktop instalado e rodando
+WSL2 habilitado (Windows)
+
+ Passos
+1) Clone o repositório
 git clone https://github.com/seu-usuario/seu-repositorio.git
-Importe no STS (Spring Tool Suite):
-File -> Import -> Existing Maven Projects.
-Execute a aplicação:
-Clique com o botão direito na classe principal -> Run As -> Spring Boot App.
-Acesse a API:
-A API estará disponível em: http://localhost:8080
-Instruções de Uso e Segurança
-A API está protegida. Siga os passos abaixo para conseguir realizar requisições:
+cd seu-repositorio
 
-1. Obter Token de Acesso
-Como o token expira a cada 5 minutos, você precisa primeiro se autenticar.
-Endpoint: POST /api/auth/login
-Corpo da Requisição (JSON):
-JSON
+2) Gere o JAR da aplicação
+
+Windows (cmd):
+mvnw.cmd clean package -DskipTests
+
+Git Bash / Linux / Mac:
+./mvnw clean package -DskipTests
+
+3) Suba todo o ambiente
+docker compose up --build
+
+Acessos
+Recurso	URL
+API	http://localhost:8080
+
+Swagger	http://localhost:8080/swagger-ui/index.html
+
+MinIO Console	http://localhost:9001
+
+Login MinIO:
+
+admin
+admin123
+
+Parar o ambiente
+docker compose down
+
+Segurança e Uso da API
+
+A API é protegida por JWT com expiração de 5 minutos.
+
+Obter Token de Acesso
+
+Endpoint
+
+POST /api/auth/login
+
+
+Body
+
 {
   "login": "admin"
 }
-Resposta: Você receberá um campo token. Copie o valor gerado.
 
-2. Autorizar no Swagger
-Acesse: http://localhost:8080/swagger-ui/index.html
 
-Clique no botão Authorize (ícone de cadeado no topo direito).
-No campo de texto, cole o token copiado (não é necessário digitar "Bearer", o sistema já está configurado para isso).
-Clique em Authorize e depois em Close.
+A resposta retornará:
 
-3. Testar Endpoints
-Agora, todos os endpoints de /api/artistas, /api/albuns e /api/regionais estarão liberados para uso enquanto o token for válido.
+{
+  "token": "..."
+}
+
+Autorizar no Swagger
+
+Acesse:
+
+http://localhost:8080/swagger-ui/index.html
+
+
+Clique em Authorize
+
+Cole o token gerado
+
+Clique em Authorize → Close
+
+3️ Testar os Endpoints
+
+Com o token ativo, você pode usar:
+
+/api/artistas
+
+/api/albuns
+
+/api/regionais

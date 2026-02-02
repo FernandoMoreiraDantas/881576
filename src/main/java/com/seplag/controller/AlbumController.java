@@ -64,5 +64,11 @@ public class AlbumController {
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(albumService.criarComImagem(titulo, ano, artistaIds, imagem));
 	}
+	
+	@GetMapping("/{id}/imagem")
+	public ResponseEntity<String> obterImagem(@PathVariable Long id) throws Exception {
+	    return ResponseEntity.ok(albumService.obterUrlImagem(id));
+	}
+
 
 }

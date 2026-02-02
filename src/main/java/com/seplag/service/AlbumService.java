@@ -78,5 +78,18 @@ public class AlbumService {
 
 		return albumSalvo;
 	}
+	
+	
+	public String obterUrlImagem(Long albumId) throws Exception {
+
+	    Album album = buscarPorId(albumId);
+
+	    AlbumImagem imagem = album.getImagens()
+	            .stream()
+	            .findFirst()
+	            .orElseThrow(() -> new RuntimeException("Imagem não encontrada para o álbum"));
+
+	    return minioService.gerarUrlTemporaria(imagem.getObjectKey());
+	}
 
 }

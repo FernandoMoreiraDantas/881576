@@ -1,5 +1,6 @@
 package com.seplag.service;
 
+import java.io.InputStream;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.minio.BucketExistsArgs;
+import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import io.minio.http.Method;
 
 @Service
 public class MinioService {
@@ -24,25 +27,48 @@ public class MinioService {
     }
 
     public String upload(MultipartFile file) throws Exception {
-        String objectKey = "capas/" + UUID.randomUUID() + "-" + file.getOriginalFilename();
 
-        // cria bucket se não existir
-        boolean found = minioClient.bucketExists(
-                BucketExistsArgs.builder().bucket(bucket).build());
+        String objectKey = UUID.randomUUID() + "-" + file.getOriginalFilename();
 
-        if (!found) {
-            minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucket).build());
+        criarBucketSeNaoExistir();
+
+        try (InputStream is = file.getInputStream()) {
+            minioClient.putObject(
+                    PutObjectArgs.builder()
+                            .bucket(bucket)
+                            .object(objectKey)
+                            .stream(is, file.getSize(), -1)
+                            .contentType(file.getContentType())
+                            .build()
+            );
         }
-
-        minioClient.putObject(
-                PutObjectArgs.builder()
-                        .bucket(bucket)
-                        .object(objectKey)
-                        .stream(file.getInputStream(), file.getSize(), -1)
-                        .contentType(file.getContentType())
-                        .build());
 
         return objectKey;
     }
+
+    public String gerarUrlTemporaria(String objectKey) throws Exception {
+        return minioClient.getPresignedObjectUrl(
+                GetPresignedObjectUrlArgs.builder()
+                        .method(Method.GET)
+                        .bucket(bucket)
+                        .object(objectKey)
+                        .expiry(60 * 30)
+                        .build()
+        );
+    }
+    
+    private void criarBucketSeNaoExistir() throws Exception {
+
+        boolean exists = minioClient.bucketExists(
+                BucketExistsArgs.builder().bucket(bucket).build()
+        );
+
+        if (!exists) {
+            minioClient.makeBucket(
+                    MakeBucketArgs.builder().bucket(bucket).build()
+            );
+        }
+    }
 }
+
 

@@ -1,3 +1,8 @@
+Candidato:
+N° Inscrição : 16358
+Nome: FERNANDO MOREIRA DANTAS
+CPF: 881.576.791-68
+
 Music API — Spring Boot + Docker
 
 API REST para gerenciamento de Artistas, Álbuns e Regionais, desenvolvida com Java 17 + Spring Boot, utilizando autenticação JWT, migração de banco com Flyway, armazenamento de arquivos no MinIO e ambiente totalmente containerizado com Docker.
@@ -114,3 +119,12 @@ Com o token ativo, você pode usar:
 /api/albuns
 
 /api/regionais
+
+/api/v1/albuns/{id}/imagem
+
+Recuperação de Imagem do Álbum (Link Pré-Assinado)
+
+A API retornará uma URL semelhante a:
+
+http://localhost:9000/capas/8c1504e0-...-capa.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&..
+

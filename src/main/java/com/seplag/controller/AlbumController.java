@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.seplag.config.ApiPaths;
 import com.seplag.dto.AlbumTipoDTO;
 import com.seplag.model.Album;
 import com.seplag.service.AlbumService;
 
 @RestController
-@RequestMapping("/api/albuns")
+@RequestMapping(ApiPaths.V1 + "/albuns")
+
 public class AlbumController {
 
 	@Autowired

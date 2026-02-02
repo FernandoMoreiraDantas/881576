@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.seplag.config.ApiPaths;
 import com.seplag.model.Artista;
 import com.seplag.service.ArtistaService;
 
 @RestController
-@RequestMapping("/api/artistas")
+@RequestMapping(ApiPaths.V1 + "/artistas")
 public class ArtistaController {
 
 	@Autowired

@@ -1,5 +1,6 @@
 package com.seplag.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,7 +35,7 @@ public class Artista {
         joinColumns = @JoinColumn(name = "artista_id"),
         inverseJoinColumns = @JoinColumn(name = "album_id")
     )
-    private List<Album> albuns;
+    private List<Album> albuns = new ArrayList<>();
 
     public Artista() {}
 

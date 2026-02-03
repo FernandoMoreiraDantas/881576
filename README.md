@@ -49,10 +49,10 @@ cd seu-repositorio
 2) Gere o JAR da aplicação
 
 Windows (cmd):
-mvnw.cmd clean package -DskipTests
+mvnw.cmd clean package
 
 Git Bash / Linux / Mac:
-./mvnw clean package -DskipTests
+./mvnw clean package
 
 3) Suba todo o ambiente
 docker compose up --build

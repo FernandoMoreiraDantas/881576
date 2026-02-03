@@ -28,10 +28,12 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Desabilita CSRF para APIs
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Libera o Swagger para você poder testar
+                // Libera o Swagger
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                // Libera o endpoint de login (que criaremos a seguir)
+                // Libera o endpoint de login
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                // Libera o actuator
+                .requestMatchers("/actuator/**").permitAll()
                 // Bloqueia todo o resto
                 .anyRequest().authenticated()
             )

@@ -1,11 +1,10 @@
-Candidato:
-N° Inscrição : 16358
+Candidato: N° Inscrição : 16358
+
 Nome: FERNANDO MOREIRA DANTAS
+
 CPF: 881.576.791-68
 
 Music API — Spring Boot + Docker
-
-API REST para gerenciamento de Artistas, Álbuns e Regionais, desenvolvida com Java 17 + Spring Boot, utilizando autenticação JWT, migração de banco com Flyway, armazenamento de arquivos no MinIO e ambiente totalmente containerizado com Docker.
 
 Tecnologias Utilizadas
 
@@ -28,18 +27,6 @@ SpringDoc OpenAPI (Swagger)
 Docker & Docker Compose
 
 Arquitetura do Ambiente (Docker)
-
-Ao subir o projeto com Docker, são criados automaticamente:
-
-Serviço	   Porta	    Função
-music-api	8080	API Spring Boot
-postgres	5432	Banco de dados PostgreSQL
-minio	9000	Storage de imagens (S3-like)
-minio-ui	9001	Console administrativo do MinIO
-Como Executar com Docker
-Pré-requisitos
-Docker Desktop instalado e rodando
-WSL2 habilitado (Windows)
 
  Passos
 1) Clone o repositório
@@ -110,7 +97,7 @@ Cole o token gerado
 
 Clique em Authorize → Close
 
-3️ Testar os Endpoints
+Testar os Endpoints
 
 Com o token ativo, você pode usar:
 
@@ -127,4 +114,13 @@ Recuperação de Imagem do Álbum (Link Pré-Assinado)
 A API retornará uma URL semelhante a:
 
 http://localhost:9000/capas/8c1504e0-...-capa.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&..
+
+Health Checks
+
+http://localhost:8080/actuator/health
+
+http://localhost:8080/actuator/health/liveness
+
+http://localhost:8080/actuator/health/readiness
+
 

@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 @Table(name = "regional")
 public class Regional {
     @Id
-    private Integer id; // Definido como PRIMARY KEY manual no seu SQL
+    private Integer id;
 
     @Column(nullable = false)
     private String nome;
